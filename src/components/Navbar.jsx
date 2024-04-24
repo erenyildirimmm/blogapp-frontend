@@ -16,9 +16,9 @@ const Navbar = () => {
 
   // Array containing navigation items
   const navItems = [
-    { id: 1, text: "Books", path: "/", isAuth: false },
-    { id: 2, text: "Create", path: "/books/create", isAuth: true },
-    { id: 3, text: "Profile", path: "/profile", isAuth: true },
+    { id: 1, text: "Kitaplar", path: "/", isAuth: false },
+    { id: 2, text: "Kitap Oluştur", path: "/books/create", isAuth: true },
+    { id: 3, text: "Profil", path: "/profile", isAuth: true },
     // { id: 4, text: "Profile", path: "/my-books", isAuth: true },
   ];
 
@@ -29,7 +29,7 @@ const Navbar = () => {
 
       {/* Desktop Navigation */}
       {token && (
-        <ul className="hidden md:flex">
+        <ul className="hidden md:flex gap-4">
           {navItems.map((item) => (
             <Link to={item.path} key={item.id}>
               <li

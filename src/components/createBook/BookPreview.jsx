@@ -24,7 +24,7 @@ const BookPreview = ({
         style={{
           backgroundImage: !isUpdate
             ? `url(${previewImage})`
-            : `url(https://api.deerbro.com/${previewImage})`,
+            : `url(http://localhost:3001/${previewImage})`,
         }}
       ></div>
       <div className="px-4 py-2 mb-3">

@@ -37,7 +37,7 @@ const AuthProvider = ({ children }) => {
       localStorage.setItem("userId", userId);
       localStorage.setItem("expiryDate", expiryDate);
       axios
-        .get(`https://api.deerbro.com/users/${userId}`)
+        .get(`http://localhost:3001/users/${userId}`)
         .then((response) => {
           setUser(response.data);
         })

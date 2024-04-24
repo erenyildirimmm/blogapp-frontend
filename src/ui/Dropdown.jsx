@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
-const Dropdown = ({ options, onSelect, name, label, className }) => {
+const Dropdown = ({ options, onSelect, name, label, data, className }) => {
   const [selectedOption, setSelectedOption] = useState("");
   const [dropdown, setDropdown] = useState(false);
   const [selectedInput, setSelectedInput] = useState("");
 
+  useEffect(() => {
+    if(data) {
+      setSelectedOption(data.name);
+    }
+  }, [data]);
+
   const handleSelect = (option) => {
+    console.log(option);
     setSelectedOption((opt) => option.name);
     setDropdown((list) => !list);
     onSelect(option);

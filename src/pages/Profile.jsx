@@ -12,7 +12,7 @@ const Profile = () => {
     console.log(user);
   }
   // const getUser = async (id) => {
-  //   const result = await axios.get(`https://api.deerbro.com/users/${id}`);
+  //   const result = await axios.get(`http://localhost:3001/users/${id}`);
   //   console.log(result.data);
   // };
   // useEffect(() => {

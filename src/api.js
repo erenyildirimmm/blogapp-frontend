@@ -17,7 +17,6 @@ const fetchData = async (method, endpoint, data = null, params = {}) => {
         ...(token && { Authorization: `Bearer ${token}` }),
       },
     };
-
     if (data) {
       config.data = data;
     }

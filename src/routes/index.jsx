@@ -7,12 +7,12 @@ import { useAuth } from "../provider/authProvider";
 import { ProtectedRoute } from "./ProtectedRoute";
 import Login from "../pages/Login";
 import Home from "../pages/Home";
-import EditBook from "../pages/EditBook";
 import { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import CreateBooks from "../pages/CreateBooks";
 import Register from "../pages/Register";
 import Profile from "../pages/Profile";
+import Footer from "../components/Footer";
 
 const Routes = () => {
   const { token, setToken } = useAuth();
@@ -55,7 +55,7 @@ const Routes = () => {
         },
         {
           path: "/books/edit/:id",
-          element: <EditBook />,
+          element: <CreateBooks isEdit={true} />,
         },
         {
           path: "/profile",

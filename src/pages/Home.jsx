@@ -29,8 +29,8 @@ const Home = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <Section brand="Book List">
-          <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-8 xl:grid-cols-4">
+        <Section brand="Tüm Kitaplar">
+          <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 md:gap-16 gap-8 xl:grid-cols-4">
             <BooksCard books={books} getBooks={getBooks} />
           </div>
         </Section>

@@ -21,7 +21,7 @@ const Register = () => {
       password,
     };
     try {
-      const result = await axios.put("https://api.deerbro.com/auth/signup", data);
+      const result = await axios.put("http://localhost:3001/auth/signup", data);
       navigate("/login");
       enqueueSnackbar("Kayıt Başarılı", { variant: "success" });
     } catch (error) {

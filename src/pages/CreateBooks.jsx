@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { useSnackbar } from "notistack";
 import { useAuth } from "../provider/authProvider";
@@ -9,8 +9,9 @@ import BookSingleCard from "../components/home/BookSingleCard";
 import fetchData from "../api";
 import Container from "../ui/Container";
 
-const CreateBooks = () => {
+const CreateBooks = ({ isEdit }) => {
   const { user, auth } = useAuth();
+  const { id } = useParams();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const [form, setForm] = useState({
@@ -73,8 +74,16 @@ const CreateBooks = () => {
     formData.append("image", form.image);
     setLoading(true);
     try {
-      const response = await fetchData("POST", "/books", formData);
-      enqueueSnackbar(response.message, { variant: "success" });
+      const response = await fetchData(
+        `${isEdit ? "PUT" : "POST"}`,
+        `${isEdit ? `/books/${id}` : "/books"}`,
+        formData
+      );
+      if (isEdit) {
+        enqueueSnackbar("Book edited.", { variant: "success" });
+      } else {
+        enqueueSnackbar(response.message, { variant: "success" });
+      }
       navigate("/");
     } catch (error) {
       setLoading(false);
@@ -94,6 +103,34 @@ const CreateBooks = () => {
       console.log(error);
     }
   };
+
+  const getBook = async () => {
+    setLoading(true);
+    try {
+      const bookData = await fetchData("GET", `/books/${id}`);
+      setForm({
+        title: bookData.title,
+        author: bookData.author,
+        content: bookData.content,
+        image: bookData.imageUrl,
+        category: {
+          name: bookData.category.name,
+          id: bookData.category._id,
+        },
+      });
+    } catch (error) {
+      setLoading(false);
+      enqueueSnackbar(error, { variant: "error" });
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (isEdit) {
+      getBook();
+      setLoading(false);
+    }
+  }, [isEdit]);
 
   useEffect(() => {
     if (auth) {

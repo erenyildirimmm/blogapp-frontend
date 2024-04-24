@@ -38,6 +38,7 @@ const CreateForm = ({
           label="Kategori"
           className="mb-4"
           options={options}
+          data={form.category}
           onSelect={onDropdownSelect}
         />
         <Input

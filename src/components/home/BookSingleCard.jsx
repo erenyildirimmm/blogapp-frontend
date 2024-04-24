@@ -83,7 +83,7 @@ const BookSingleCard = ({ book, preview = false, previewImage, getBooks }) => {
           style={{
             backgroundImage: `${
               !preview
-                ? `url("https://api.deerbro.com/${book.imageUrl}")`
+                ? `url("http://localhost:3001/${book.imageUrl}")`
                 : `url(${previewImage})`
             }`,
           }}
