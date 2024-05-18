@@ -52,6 +52,7 @@ const Register = () => {
           />
           <input
             onChange={(e) => setEmail(e.target.value)}
+            autoComplete="new-mail"
             value={email}
             type="text"
             className="mb-3 p-3 border outline-none rounded-md"
@@ -59,18 +60,19 @@ const Register = () => {
           />
           <input
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="new-password"
             value={password}
             type="password"
             className="mb-3 p-3 border outline-none rounded-md "
             placeholder="Password"
           />
-          <button className="p-3 block w-full bg-[#00df9a] text-white rounded-md">
+          <button className="p-3 block w-full bg-primary text-white rounded-md">
             Kayıt Ol
           </button>
         </form>
         <small className="text-white mt-2">
           Zaten bir hesabın var mı?{" "}
-          <Link to={"/login"} className="text-[#00df9a]">
+          <Link to={"/login"} className="text-primary">
             Giriş Yap
           </Link>
         </small>

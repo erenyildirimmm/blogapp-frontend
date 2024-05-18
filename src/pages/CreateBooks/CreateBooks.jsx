@@ -1,26 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Spinner from "../components/Spinner";
+import Spinner from "../../components/Spinner";
 import { useSnackbar } from "notistack";
-import { useAuth } from "../provider/authProvider";
-import dummyImg from "../assets/login.jpg";
-import CreateForm from "../components/createBook/CreateForm";
-import BookSingleCard from "../components/home/BookSingleCard";
-import fetchData from "../api";
-import Container from "../ui/Container";
+import dummyImg from "../../assets/login.jpg";
+import CreateForm from "./components/CreateForm";
+import fetchData from "../../api";
+import Container from "../../ui/Container";
 
 const CreateBooks = ({ isEdit }) => {
-  const { user, auth } = useAuth();
   const { id } = useParams();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const [form, setForm] = useState({
     title: "",
-    author: "",
-    content: "",
+    entryHeadline: "",
     image: null,
     category: null,
   });
+  const [editorContent, setEditorContent] = useState("");
   const [previewImage, setPreviewImage] = useState(dummyImg);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -55,9 +52,9 @@ const CreateBooks = ({ isEdit }) => {
   const handleSaveBook = async () => {
     if (
       !form.title ||
-      !form.author ||
+      !form.entryHeadline ||
       !form.category ||
-      !form.content ||
+      !editorContent ||
       !form.image
     ) {
       enqueueSnackbar("Tüm alanları doldurmalısın", {
@@ -68,11 +65,12 @@ const CreateBooks = ({ isEdit }) => {
     }
     const formData = new FormData();
     formData.append("title", form.title);
-    formData.append("author", form.author);
+    formData.append("entryHeadline", form.entryHeadline);
     formData.append("category", form.category.id);
-    formData.append("content", form.content);
+    formData.append("content", editorContent);
     formData.append("image", form.image);
     setLoading(true);
+    console.log(formData);
     try {
       const response = await fetchData(
         `${isEdit ? "PUT" : "POST"}`,
@@ -110,14 +108,14 @@ const CreateBooks = ({ isEdit }) => {
       const bookData = await fetchData("GET", `/books/${id}`);
       setForm({
         title: bookData.title,
-        author: bookData.author,
-        content: bookData.content,
+        entryHeadline: bookData.entryHeadline,
         image: bookData.imageUrl,
         category: {
           name: bookData.category.name,
           id: bookData.category._id,
         },
       });
+      setEditorContent(bookData.content);
     } catch (error) {
       setLoading(false);
       enqueueSnackbar(error, { variant: "error" });
@@ -133,34 +131,24 @@ const CreateBooks = ({ isEdit }) => {
   }, [isEdit]);
 
   useEffect(() => {
-    if (auth) {
-      getCategories();
-    }
-  }, [auth]);
+    getCategories();
+  }, []);
 
   return (
     <Container>
-      {loading ? <Spinner /> : ""}
-      <div className="grid lg:grid-cols-6 grid-cols-1 gap-12 pt-10">
-        <div className="lg:col-span-2 rounded-md p-3 w-full text-white">
-          {user && (
-            <BookSingleCard
-              book={form}
-              preview={true}
-              previewImage={previewImage}
-            />
-          )}
-        </div>
-        <div className="lg:col-span-4">
-          <CreateForm
-            onInputChange={handleInputChange}
-            form={form}
-            options={options}
-            onSaveBook={handleSaveBook}
-            onDropdownSelect={handleDropdownChange}
-          />
-        </div>
-      </div>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <CreateForm
+          onInputChange={handleInputChange}
+          form={form}
+          options={options}
+          editorContent={editorContent}
+          setEditorContent={setEditorContent}
+          onSaveBook={handleSaveBook}
+          onDropdownSelect={handleDropdownChange}
+        />
+      )}
     </Container>
   );
 };

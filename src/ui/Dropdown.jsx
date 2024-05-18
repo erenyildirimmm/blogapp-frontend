@@ -33,7 +33,7 @@ const Dropdown = ({ options, onSelect, name, label, data, className }) => {
         <label
           htmlFor={name}
           className={`text-md mr-4 ${
-            selectedInput === name ? "text-[#00df9a]" : "text-gray-500"
+            selectedInput === name ? "text-primary" : "text-gray-500"
           }`}
         >
           {label}
@@ -41,8 +41,8 @@ const Dropdown = ({ options, onSelect, name, label, data, className }) => {
       )}
       <div
         tabIndex={0}
-        className={`w-full mt-3 p-3 border outline-none rounded-md flex justify-between items-center ${
-          selectedInput === name ? "border-[#00df9a]" : ""
+        className={`w-full mt-3 p-3 border outline-none rounded-md flex justify-between items-center bg-white ${
+          selectedInput === name ? "border-primary" : ""
         }`}
         onFocus={() => handleFocusInput(name)}
         onBlur={handleBlurInput}
@@ -62,11 +62,11 @@ const Dropdown = ({ options, onSelect, name, label, data, className }) => {
         />
       </div>
       {dropdown && (
-        <ul className="absolute bg-white text-gray-900 border rounded-md mt-2 w-full overflow-y-auto max-h-80 shadow">
+        <ul className="absolute bg-white text-gray-900 border rounded-md mt-2 w-full overflow-y-auto max-h-80 shadow z-20">
           {options.map((option) => (
             <li
               key={option.id}
-              className="p-3 hover:bg-[#00df9a] hover:text-white cursor-pointer"
+              className="p-3 hover:bg-primary hover:text-white cursor-pointer"
               onClick={() => handleSelect(option)}
             >
               {option.name}

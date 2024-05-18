@@ -16,7 +16,7 @@ const Input = ({ label, className, Tag = 'input', ...props }) => {
       {label && (
         <label
           className={`text-md  mr-4 ${
-            selectedInput === props.name ? "text-[#00df9a]" : "text-gray-500"
+            selectedInput === props.name ? "text-primary" : "text-gray-500"
           }`}
         >
           {label}
@@ -27,7 +27,7 @@ const Input = ({ label, className, Tag = 'input', ...props }) => {
         onBlur={handleBlurInput}
         onFocus={handleFocusInput}
         className={`w-full mt-3 p-3 border outline-none rounded-md ${
-          selectedInput === props.name ? "border-[#00df9a]" : ""
+          selectedInput === props.name ? "border-primary" : ""
         }`}
       />
     </div>

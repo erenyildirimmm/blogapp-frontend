@@ -53,26 +53,27 @@ const Login = () => {
         <form onSubmit={handleLogin} className="flex flex-col w-80">
           <input
             onChange={(e) => setEmail(e.target.value)}
+            autoComplete="new-mail"
             value={email ? email : ""}
             type="text"
             className="mb-3 p-3 border outline-none rounded-md"
             placeholder="Email"
-            autoComplete="off"
           />
           <input
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="new-password"
             value={password}
             type="password"
             className="mb-3 p-3 border outline-none rounded-md "
             placeholder="Password"
           />
-          <button className="p-3 block w-full bg-[#00df9a] text-white rounded-md">
+          <button className="p-3 block w-full bg-primary text-white rounded-md">
             Login
           </button>
         </form>
         <small className="text-white mt-2">
           Henüz bir hesabın yok mu?{" "}
-          <Link to={"/register"} className="text-[#00df9a]">
+          <Link to={"/register"} className="text-primary">
             Kayıt Ol
           </Link>
         </small>

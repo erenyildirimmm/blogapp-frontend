@@ -1,18 +1,16 @@
 import {
   RouterProvider,
   createBrowserRouter,
-  useNavigate,
 } from "react-router-dom";
 import { useAuth } from "../provider/authProvider";
 import { ProtectedRoute } from "./ProtectedRoute";
 import Login from "../pages/Login";
-import Home from "../pages/Home";
-import { useEffect } from "react";
+import Home from "../pages/Home/Home";
 import Navbar from "../components/Navbar";
-import CreateBooks from "../pages/CreateBooks";
 import Register from "../pages/Register";
-import Profile from "../pages/Profile";
-import Footer from "../components/Footer";
+import Profile from "../pages/Profile/Profile";
+import PostDetail from "../pages/PostDetail/PostDetail";
+import CreateBooks from "../pages/CreateBooks/CreateBooks";
 
 const Routes = () => {
   const { token, setToken } = useAuth();
@@ -25,6 +23,24 @@ const Routes = () => {
         <>
           <Navbar />
           <Home />
+        </>
+      ),
+    },
+    {
+      path: "/books/:id",
+      element: (
+        <>
+          <Navbar />
+          <PostDetail />
+        </>
+      ),
+    },
+    {
+      path: "/profile/:id",
+      element: (
+        <>
+          <Navbar />
+          <Profile />
         </>
       ),
     },
@@ -58,7 +74,7 @@ const Routes = () => {
           element: <CreateBooks isEdit={true} />,
         },
         {
-          path: "/profile",
+          path: "/profile/:id",
           element: <Profile />,
         },
       ],
