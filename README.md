@@ -28,7 +28,7 @@ Before you begin, ensure you have met the following requirements:
 2. Navigate to the frontend directory:
 
     ```bash
-    cd your-repo-name/frontend
+    cd blogapp-frontend
     ```
 
 3. Install the dependencies:
