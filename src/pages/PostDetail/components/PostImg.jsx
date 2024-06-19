@@ -1,21 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import profilePic from "../../../assets/user.png";
 import { format } from "date-fns";
 import { tr } from "date-fns/locale";
 import { FaCalendarAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
-
+import Like from "./Like";
+import { useAuth } from "../../../provider/authProvider";
 const PostImg = ({ data }) => {
-  console.log(data);
+  const { token } = useAuth();
   return (
-    <div className="wrapper relative">
+    <div className="wrapper relative overflow-hidden">
       <div className="relative after:absolute after:w-full after:h-full after:content-[''] after:top-0 after:left-0 after:bg-black/40 after:rounded-lg">
-        <div className="absolute top-0 left-0 md:p-12 p-4 z-10">
+        <div className="absolute top-0 left-0 md:p-12 p-4 z-10 w-full">
           <h1 className="md:text-4xl text-2xl text-white font-bold md:mb-4 mb-2 text-left">
             {data.title}
           </h1>
           <div className="flex items-center gap-4">
-            <Link to={`/profile/${data.creator._id}`} className="flex items-center gap-2">
+            <Link
+              to={`/profile/${data.creator._id}`}
+              className="flex items-center gap-2"
+            >
               <img
                 src={profilePic}
                 className="w-5 h-5 rounded-full"
@@ -32,6 +36,7 @@ const PostImg = ({ data }) => {
               </span>
             </div>
           </div>
+          {token && <Like postId={data._id} />}
         </div>
         <img
           src={`http://localhost:3001/${data.imageUrl}`}

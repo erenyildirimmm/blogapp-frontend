@@ -74,11 +74,11 @@ const CreateBooks = ({ isEdit }) => {
     try {
       const response = await fetchData(
         `${isEdit ? "PUT" : "POST"}`,
-        `${isEdit ? `/books/${id}` : "/books"}`,
+        `${isEdit ? `/posts/${id}` : "/posts"}`,
         formData
       );
       if (isEdit) {
-        enqueueSnackbar("Book edited.", { variant: "success" });
+        enqueueSnackbar("Post edited.", { variant: "success" });
       } else {
         enqueueSnackbar(response.message, { variant: "success" });
       }
@@ -92,7 +92,7 @@ const CreateBooks = ({ isEdit }) => {
 
   const getCategories = async () => {
     try {
-      const response = await fetchData("GET", "/books/categories");
+      const response = await fetchData("GET", "/posts/categories");
       setCategories(response.categories);
       setLoading(false);
     } catch (error) {

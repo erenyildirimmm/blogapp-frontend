@@ -16,7 +16,6 @@ const Profile = () => {
   const getUser = async () => {
     const result = await fetchData("GET", `/users/${id}`);
     setUserData(result);
-    console.log(result);
   };
 
   useEffect(() => {
@@ -50,11 +49,11 @@ const Profile = () => {
           <div className="flex items-center gap-4">
             <h1 className="text-3xl">Blogs</h1>
             <div className="w-12 h-12 rounded-full border border-primary flex items-center justify-center text-primary ">
-              <span className="font-semibold">{userData.books.length}</span>
+              <span className="font-semibold">{userData.posts.length}</span>
             </div>
           </div>
           <div className="grid md:grid-cols-3 grid-cols-1 gap-8 pt-8">
-            {userData.books.map((blog) => (
+            {userData.posts.map((blog) => (
               <DefaultBlogCard key={blog._id} data={blog} />
             ))}
           </div>
