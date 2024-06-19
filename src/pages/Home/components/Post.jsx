@@ -2,6 +2,8 @@ import React from "react";
 import CardBox from "../../../components/CardBox";
 import profilePic from "../../../assets/user.png";
 import { Link } from "react-router-dom";
+import { FaRegHeart } from "react-icons/fa";
+import { FaRegCommentDots } from "react-icons/fa";
 
 const Post = ({ postOrder = 1, data }) => {
   return postOrder === 1 ? (
@@ -33,6 +35,16 @@ const Post = ({ postOrder = 1, data }) => {
             <span className="text-xs text-black/70">{data.creator.name}</span>
           </div>
         </Link>
+        <div className="absolute bottom-3 right-3 flex items-center gap-3">
+          <div className="flex items-center gap-1">
+            <FaRegHeart size={10} />
+            <span className="text-xs">{data.likesCount}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <FaRegCommentDots size={10} />
+            <span className="text-xs">{data.commentsCount}</span>
+          </div>
+        </div>
       </div>
     </CardBox>
   ) : postOrder === 2 ? (
@@ -53,6 +65,16 @@ const Post = ({ postOrder = 1, data }) => {
             <span className="text-xs text-white">{data.creator.name}</span>
           </div>
         </Link>
+        <div className="absolute bottom-3 right-3 flex items-center gap-3 z-10 text-white">
+          <div className="flex items-center gap-1">
+            <FaRegHeart size={10} />
+            <span className="text-xs">{data.likesCount}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <FaRegCommentDots size={10} />
+            <span className="text-xs">{data.commentsCount}</span>
+          </div>
+        </div>
       </div>
       <img
         src={`http://localhost:3001/${data.imageUrl}`}
@@ -82,6 +104,16 @@ const Post = ({ postOrder = 1, data }) => {
             <span className="text-xs text-black/70">{data.creator.name}</span>
           </div>
         </Link>
+        <div className="absolute bottom-3 right-3 flex items-center gap-3">
+          <div className="flex items-center gap-1">
+            <FaRegHeart size={10} />
+            <span className="text-xs">{data.likesCount}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <FaRegCommentDots size={10} />
+            <span className="text-xs">{data.commentsCount}</span>
+          </div>
+        </div>
       </div>
     </CardBox>
   ) : postOrder === 4 ? (
@@ -107,6 +139,16 @@ const Post = ({ postOrder = 1, data }) => {
             <span className="text-xs text-black/70">{data.creator.name}</span>
           </div>
         </Link>
+        <div className="absolute bottom-3 right-3 flex items-center gap-3">
+          <div className="flex items-center gap-1">
+            <FaRegHeart size={10} />
+            <span className="text-xs">{data.likesCount}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <FaRegCommentDots size={10} />
+            <span className="text-xs">{data.commentsCount}</span>
+          </div>
+        </div>
       </div>
     </CardBox>
   ) : (
@@ -131,6 +173,16 @@ const Post = ({ postOrder = 1, data }) => {
             <span className="text-xs text-black/70">{data.creator.name}</span>
           </div>
         </Link>
+        <div className="absolute bottom-3 right-3 flex items-center gap-3">
+          <div className="flex items-center gap-1">
+            <FaRegHeart size={10} />
+            <span className="text-xs">{data.likesCount}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <FaRegCommentDots size={10} />
+            <span className="text-xs">{data.commentsCount}</span>
+          </div>
+        </div>
       </div>
     </CardBox>
   );

@@ -13,12 +13,12 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
 
-  const getBooks = async () => {
+  const getPosts = async () => {
     try {
-      const response = await fetchData("GET", `/books?page=${page}&limit=7`);
-      setPosts((prevPosts) => [...prevPosts, ...response.data]);
+      const response = await fetchData("GET", `/posts?page=${page}&limit=7`);
       console.log(response);
-      if(response.data.length < 7) setHasMore(false);
+      setPosts((prevPosts) => [...prevPosts, ...response.data]);
+      if (response.data.length < 7) setHasMore(false);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -26,12 +26,12 @@ const Home = () => {
   };
 
   useEffect(() => {
-    getBooks();
+    getPosts();
   }, [page]);
 
   const handleShowMore = () => {
     setPage((prevPage) => prevPage + 1);
-  }
+  };
 
   return (
     <Container>
