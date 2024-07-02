@@ -49,18 +49,16 @@ const Like = ({ postId }) => {
     }
   };
   return (
-    <div className="w-12 h-12 flex items-center justify-center  bg-gray-600/60 rounded-full absolute top-4 right-4 z-10">
+    <div className="sm:w-12 sm:h-12 h-8 w-8 flex items-center justify-center  bg-gray-600/60 rounded-full">
       {isLike ? (
         <FaHeart
-          className="text-red-500 cursor-pointer"
+          className="text-red-500 cursor-pointer sm:text-2xl text-md"
           onClick={handleLike}
-          size={25}
         />
       ) : (
         <FaRegHeart
-          className="text-white cursor-pointer"
+          className="text-white cursor-pointer sm:text-2xl text-md"
           onClick={handleLike}
-          size={25}
         />
       )}
     </div>

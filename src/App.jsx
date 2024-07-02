@@ -21,12 +21,15 @@
 // export default App
 
 import AuthProvider from "./provider/authProvider";
+import PostProvider from "./provider/postProvider";
 import Routes from "./routes";
 
 function App() {
   return (
     <AuthProvider>
-      <Routes />
+      <PostProvider>
+        <Routes />
+      </PostProvider>
     </AuthProvider>
   );
 }

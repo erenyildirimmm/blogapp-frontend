@@ -11,6 +11,7 @@ import Register from "../pages/Register";
 import Profile from "../pages/Profile/Profile";
 import PostDetail from "../pages/PostDetail/PostDetail";
 import CreateBooks from "../pages/CreateBooks/CreateBooks";
+import NotFound from "../pages/NotFound";
 
 const Routes = () => {
   const { token, setToken } = useAuth();
@@ -63,7 +64,7 @@ const Routes = () => {
       children: [
         {
           path: "/books/create",
-          element: <CreateBooks />,
+          element: <CreateBooks isEdit={false} />,
         },
         {
           path: "/",
@@ -98,6 +99,10 @@ const Routes = () => {
     ...routesForPublic,
     ...(!token ? routesForNotAuthenticatedOnly : []),
     ...routesForAuthenticatedOnly,
+    {
+      path: "*",
+      element: (<NotFound />),
+    },
   ]);
 
   // Provide the router configuration using RouterProvider

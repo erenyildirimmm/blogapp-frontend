@@ -70,7 +70,6 @@ const CreateBooks = ({ isEdit }) => {
     formData.append("content", editorContent);
     formData.append("image", form.image);
     setLoading(true);
-    console.log(formData);
     try {
       const response = await fetchData(
         `${isEdit ? "PUT" : "POST"}`,
@@ -86,7 +85,6 @@ const CreateBooks = ({ isEdit }) => {
     } catch (error) {
       setLoading(false);
       enqueueSnackbar("Error", { variant: "error" });
-      console.log(error);
     }
   };
 
@@ -98,28 +96,26 @@ const CreateBooks = ({ isEdit }) => {
     } catch (error) {
       setLoading(false);
       enqueueSnackbar(error, { variant: "error" });
-      console.log(error);
     }
   };
 
   const getBook = async () => {
     setLoading(true);
     try {
-      const bookData = await fetchData("GET", `/books/${id}`);
+      const postData = await fetchData("GET", `/posts/${id}`);
       setForm({
-        title: bookData.title,
-        entryHeadline: bookData.entryHeadline,
-        image: bookData.imageUrl,
+        title: postData.title,
+        entryHeadline: postData.entryHeadline,
+        image: postData.imageUrl,
         category: {
-          name: bookData.category.name,
-          id: bookData.category._id,
+          name: postData.category.name,
+          id: postData.category._id,
         },
       });
-      setEditorContent(bookData.content);
+      setEditorContent(postData.content);
     } catch (error) {
       setLoading(false);
       enqueueSnackbar(error, { variant: "error" });
-      console.log(error);
     }
   };
 
@@ -142,11 +138,13 @@ const CreateBooks = ({ isEdit }) => {
         <CreateForm
           onInputChange={handleInputChange}
           form={form}
+          setForm={setForm}
           options={options}
           editorContent={editorContent}
           setEditorContent={setEditorContent}
           onSaveBook={handleSaveBook}
           onDropdownSelect={handleDropdownChange}
+          isEdit={isEdit}
         />
       )}
     </Container>

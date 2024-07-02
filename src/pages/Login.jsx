@@ -33,7 +33,9 @@ const Login = () => {
       navigate("/", { replace: true });
       enqueueSnackbar("Giriş Başarılı", { variant: "success" });
     } catch (error) {
-      console.log(error);
+      if(error.response.status === 401){
+        return enqueueSnackbar("Giriş bilgileriniz hatalı.", { variant: "error" });
+      };
       enqueueSnackbar("error", { variant: "error" });
     }
   };

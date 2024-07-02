@@ -6,28 +6,27 @@ import fetchData from "../../api";
 import Post from "./components/Post";
 import CardBox from "../../components/CardBox";
 import profilePic from "../../assets/user.png";
+import { enqueueSnackbar } from "notistack";
+import { usePost } from "../../provider/postProvider";
+import { useLocation } from "react-router-dom";
 
 const Home = () => {
-  const [posts, setPosts] = useState([]);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(true);
-  const [hasMore, setHasMore] = useState(true);
-
-  const getPosts = async () => {
-    try {
-      const response = await fetchData("GET", `/posts?page=${page}&limit=7`);
-      console.log(response);
-      setPosts((prevPosts) => [...prevPosts, ...response.data]);
-      if (response.data.length < 7) setHasMore(false);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const {
+    posts,
+    hasMore,
+    page,
+    setLoading,
+    setPage,
+    setPosts,
+    loading,
+    resetPosts,
+  } = usePost();
+  const location = useLocation();
 
   useEffect(() => {
-    getPosts();
-  }, [page]);
+    setLoading(true);
+    resetPosts();
+  }, [location.pathname]);
 
   const handleShowMore = () => {
     setPage((prevPage) => prevPage + 1);

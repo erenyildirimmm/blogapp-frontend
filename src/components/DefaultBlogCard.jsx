@@ -1,9 +1,12 @@
-import React from 'react'
-import CardBox from './CardBox';
-import { Link } from 'react-router-dom';
+import React from "react";
+import CardBox from "./CardBox";
+import { Link } from "react-router-dom";
 import profilePic from "../assets/user.png";
+import { useAuth } from "../provider/authProvider";
+import PostOptions from "./PostOptions";
 
-const DefaultBlogCard = ({data}) => {
+const DefaultBlogCard = ({ data, getUser }) => {
+  const { userId } = useAuth();
   return (
     <CardBox className="relative h-72">
       <img
@@ -12,11 +15,14 @@ const DefaultBlogCard = ({data}) => {
         alt=""
       />
       <div className="p-6">
-        <Link to={`/books/${data._id}`}>
-          <h2 className="font-bold text-2xl hover:text-primary mb-4">
-            {data.title}
-          </h2>
-        </Link>
+        <div className="flex items-center justify-between mb-4">
+          <Link to={`/books/${data._id}`}>
+            <h2 className="font-bold text-xl hover:text-primary">
+              {data.title}
+            </h2>
+          </Link>
+          {data.creator._id == userId && <PostOptions data={data} getUser={getUser} />}
+        </div>
         <Link to={`/profile/${data.creator._id}`}>
           <div className="absolute bottom-9 flex items-center gap-2">
             <img
@@ -30,6 +36,6 @@ const DefaultBlogCard = ({data}) => {
       </div>
     </CardBox>
   );
-}
+};
 
 export default DefaultBlogCard;

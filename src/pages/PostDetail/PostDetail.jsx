@@ -8,11 +8,18 @@ import Comment from "./components/Comment";
 
 const PostDetail = () => {
   const [post, setPost] = useState(null);
+  const [relatedPosts, setRelatedPosts] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
     getBook();
   }, [id]);
+
+  useEffect(() => {
+    if (post) {
+      getRelatedPosts();
+    }
+  }, [post]);
 
   const getBook = async () => {
     try {
@@ -21,6 +28,18 @@ const PostDetail = () => {
       console.log(postData);
     } catch (error) {
       enqueueSnackbar(error, { variant: "error" });
+    }
+  };
+
+  const getRelatedPosts = async () => {
+    try {
+      const response = await fetchData(
+        "GET",
+        `/posts/related/${id}?category=${post.category._id}&limit=5`
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
     }
   };
 

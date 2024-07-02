@@ -4,8 +4,11 @@ import profilePic from "../../../assets/user.png";
 import { Link } from "react-router-dom";
 import { FaRegHeart } from "react-icons/fa";
 import { FaRegCommentDots } from "react-icons/fa";
+import { useAuth } from "../../../provider/authProvider";
+import PostOptions from "../../../components/PostOptions";
 
 const Post = ({ postOrder = 1, data }) => {
+  const { userId } = useAuth();
   return postOrder === 1 ? (
     <CardBox className="grid md:grid-cols-2 h-72 relative">
       <div className="md:block hidden">
@@ -16,11 +19,16 @@ const Post = ({ postOrder = 1, data }) => {
         />
       </div>
       <div className="p-6 relative">
-        <Link to={`/books/${data._id}`}>
-          <h2 className="font-bold text-2xl hover:text-primary mb-4">
-            {data.title}
-          </h2>
-        </Link>
+        <div className="flex items-center justify-between mb-4">
+          <Link to={`/books/${data._id}`}>
+            <h2 className="font-bold text-2xl hover:text-primary">
+              {data.title}
+            </h2>
+          </Link>
+          {data.creator._id == userId && (
+            <PostOptions data={data}  />
+          )}
+        </div>
         <p
           className="max-w-400px overflow-hidden line-clamp-5 mb-16"
           dangerouslySetInnerHTML={{ __html: data.content }}
@@ -50,11 +58,16 @@ const Post = ({ postOrder = 1, data }) => {
   ) : postOrder === 2 ? (
     <CardBox className="relative after:absolute after:bg-black/40 after:left-0 after:top-0 after:content-[''] after:w-full after:h-full after:rounded-lg  h-72">
       <div className="absolute top-0 left-0 p-6 z-10 w-full h-full">
-        <Link to={`/books/${data._id}`}>
-          <h2 className="font-bold text-2xl text-white hover:text-primary mb-4">
-            {data.title}
-          </h2>
-        </Link>
+        <div className="flex items-center justify-between mb-4">
+          <Link to={`/books/${data._id}`}>
+            <h2 className="font-bold text-2xl text-white hover:text-primary">
+              {data.title}
+            </h2>
+          </Link>
+          {data.creator._id == userId && (
+            <PostOptions data={data}  />
+          )}
+        </div>
         <Link to={`/profile/${data.creator._id}`}>
           <div className="absolute bottom-9 flex items-center gap-2">
             <img
@@ -85,11 +98,16 @@ const Post = ({ postOrder = 1, data }) => {
   ) : postOrder === 3 ? (
     <CardBox className="relative h-72">
       <div className="p-6">
-        <Link to={`/books/${data._id}`}>
-          <h2 className="font-bold text-2xl hover:text-primary mb-4">
-            {data.title}
-          </h2>
-        </Link>
+        <div className="flex items-center justify-between mb-4">
+          <Link to={`/books/${data._id}`}>
+            <h2 className="font-bold text-2xl hover:text-primary mb-4">
+              {data.title}
+            </h2>
+          </Link>
+          {data.creator._id == userId && (
+            <PostOptions data={data}  />
+          )}
+        </div>
         <p
           className="max-w-400px overflow-hidden line-clamp-5 mb-16"
           dangerouslySetInnerHTML={{ __html: data.content }}

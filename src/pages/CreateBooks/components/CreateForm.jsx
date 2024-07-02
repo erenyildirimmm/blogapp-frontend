@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Dropdown from "../../../ui/DropDown";
 import Input from "../../../ui/Input";
 import Editor from "../../../components/Editor";
@@ -7,16 +6,18 @@ import ImageUpload from "./ImageUpload";
 const CreateForm = ({
   onInputChange,
   form,
+  setForm,
   editorContent,
   setEditorContent,
   options,
   onSaveBook,
   onDropdownSelect,
+  isEdit
 }) => {
   return (
     <>
       <div className="max-w-4xl mx-auto">
-        <ImageUpload handleFileChange={onInputChange} image={form.image} />
+        <ImageUpload handleFileChange={onInputChange} setForm={setForm} image={form.image} isEdit={isEdit} />
         <div className="grid grid-cols-2 gap-4">
           <Input
             label="Title"

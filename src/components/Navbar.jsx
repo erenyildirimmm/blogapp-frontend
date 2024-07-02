@@ -16,8 +16,8 @@ const Navbar = () => {
 
   // Array containing navigation items
   const navItems = [
-    { id: 1, text: "Kitaplar", path: "/", isAuth: false },
-    { id: 2, text: "Kitap Oluştur", path: "/books/create", isAuth: true },
+    { id: 1, text: "Bloglar", path: "/", isAuth: false },
+    { id: 2, text: "Blog Oluştur", path: "/books/create", isAuth: true },
     { id: 3, text: "Profil", path: `/profile/${userId}`, isAuth: true },
     // { id: 4, text: "Profile", path: "/my-books", isAuth: true },
   ];

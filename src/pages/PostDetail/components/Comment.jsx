@@ -30,7 +30,7 @@ const Comment = ({ post, getBook }) => {
       });
       return;
     }
-    if (!userId) {
+    if (!token) {
       enqueueSnackbar("Yorum yapabilmek için giriş yapmalısınız.", {
         variant: "warning",
         autoHideDuration: 1500,
@@ -67,7 +67,6 @@ const Comment = ({ post, getBook }) => {
   const handleDelete = async (id) => {
     try {
       const response = await fetchData("DELETE", `/comments/${id}`);
-      console.log(response);
       enqueueSnackbar("Yorum silindi.", {
         variant: "success",
         autoHideDuration: 1500,

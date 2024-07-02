@@ -6,8 +6,9 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Like from "./Like";
 import { useAuth } from "../../../provider/authProvider";
+import Options from "./options";
 const PostImg = ({ data }) => {
-  const { token } = useAuth();
+  const { token, userId } = useAuth();
   return (
     <div className="wrapper relative overflow-hidden">
       <div className="relative after:absolute after:w-full after:h-full after:content-[''] after:top-0 after:left-0 after:bg-black/40 after:rounded-lg">
@@ -36,7 +37,10 @@ const PostImg = ({ data }) => {
               </span>
             </div>
           </div>
-          {token && <Like postId={data._id} />}
+          <div className="absolute top-4 right-4 z-10 inline-flex gap-2">
+            {token && <Like postId={data._id} />}
+            {data.creator._id === userId && <Options />}
+          </div>
         </div>
         <img
           src={`http://localhost:3001/${data.imageUrl}`}

@@ -35,8 +35,6 @@ const AuthProvider = ({ children }) => {
       localStorage.setItem("token", token);
       localStorage.setItem("userId", userId);
       localStorage.setItem("expiryDate", expiryDate);
-      console.log(token);
-      console.log(userId);
       axios
         .get(`http://localhost:3001/users/${userId}`)
         .then((response) => {

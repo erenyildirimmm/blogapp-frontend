@@ -25,7 +25,7 @@ const fetchData = async (method, endpoint, data = null, params = {}) => {
     return response.data;
   } catch (error) {
     console.error(`API isteği başarısız oldu (${method} ${endpoint}):`, error);
-    enqueueSnackbar("Hata!", { variant: "error" });
+    // enqueueSnackbar("Hata!", { variant: "error" });
     throw error;
   }
 };
