@@ -15,16 +15,22 @@ const PostProvider = ({ children }) => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(false);
-  const getPosts = async (reset = false) => {
+  const [category, setCategory] = useState("");
+  const [search, setSearch] = useState("");
+  const getPosts = async (reset = false ) => {
     try {
-      const response = await fetchData("GET", `/posts?page=${reset ? 1 : page}&limit=7`);
+      let url = `/posts/${category ? category : "all"}/${search ? search : "all"}/${
+        reset ? 1 : page
+      }?limit=10`;
+      url += `${reset ? 1 : page}?limit=10`;
+      const response = await fetchData("GET", url);
       let newPosts = response.data.filter(
         (newPost) => !posts.some((post) => post._id === newPost._id)
       );
       setPosts((prevPosts) =>
         reset ? response.data : [...prevPosts, ...newPosts]
       );
-      setHasMore(response.data.length >= 7);
+      setHasMore(response.data.length >= 10);
       if (reset) setPage(1);
     } catch (error) {
       console.log(error);
@@ -70,8 +76,11 @@ const PostProvider = ({ children }) => {
       hasMore,
       page,
       loading,
+      search,
       setLoading,
       resetPosts,
+      setSearch,
+      setCategory,
     }),
     [posts, getPosts, handleDelete, setPage, hasMore, page]
   );

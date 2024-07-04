@@ -9,6 +9,8 @@ import profilePic from "../../assets/user.png";
 import { enqueueSnackbar } from "notistack";
 import { usePost } from "../../provider/postProvider";
 import { useLocation } from "react-router-dom";
+import Input from "../../ui/Input";
+import PostFilters from "../../components/PostFilters";
 
 const Home = () => {
   const {
@@ -20,20 +22,27 @@ const Home = () => {
     setPosts,
     loading,
     resetPosts,
+    setSearch,
+    search
   } = usePost();
   const location = useLocation();
 
   useEffect(() => {
     setLoading(true);
     resetPosts();
-  }, [location.pathname]);
+  }, [location.pathname, search]);
 
   const handleShowMore = () => {
     setPage((prevPage) => prevPage + 1);
   };
 
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+  };
+
   return (
     <Container>
+      <PostFilters search={search} onSearchChange={handleSearchChange} />
       {loading ? (
         <Spinner />
       ) : (

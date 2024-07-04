@@ -26,7 +26,7 @@ const Navbar = () => {
     <div className="bg-gray-900 flex sticky z-50 top-0 justify-between items-center h-24 w-full mx-auto px-4 text-white">
       {/* Logo */}
       <Link to="/">
-        <h1 className="text-3xl font-bold text-primary">BookHub</h1>
+        <h1 className="text-3xl font-bold text-primary">BLogHub</h1>
       </Link>
 
       <div className="flex items-center gap-8">
