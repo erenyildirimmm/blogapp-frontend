@@ -1,26 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../provider/authProvider";
+import fetchData from "../api";
+import { enqueueSnackbar } from "notistack";
+import NavbarDropdown from "./NavbarDropdown";
 
 const Navbar = () => {
   const { token, handleLogout, userId } = useAuth();
   const location = useLocation();
-  // State to manage the navbar's visibility
   const [nav, setNav] = useState(false);
+  const [allRoutes, setAllRoutes] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [isActive, setIsActive] = useState(false);
 
-  // Toggle function to handle the navbar's display
+  const getCategories = async () => {
+    try {
+      const categories = await fetchData("GET", "/posts/categories");
+      setCategories(categories.categories);
+    } catch (error) {
+      enqueueSnackbar("Kategoriler getirilemedi", { variant: "error" });
+    }
+  };
+
   const handleNav = () => {
     setNav((nax) => !nav);
   };
 
-  // Array containing navigation items
-  const navItems = [
-    { id: 1, text: "Bloglar", path: "/", isAuth: false },
-    { id: 2, text: "Blog Oluştur", path: "/books/create", isAuth: true },
-    { id: 3, text: "Profil", path: `/profile/${userId}`, isAuth: true },
-    // { id: 4, text: "Profile", path: "/my-books", isAuth: true },
+  const privateRoutes = [
+    { id: 1, text: "Blog Oluştur", path: "/books/create" },
+    { id: 2, text: "Profil", path: `/profile/${userId}` },
   ];
+
+  // Array containing navigation items
+  const publicRoutes = [
+    { id: 3, text: "Bloglar", subNav: categories, path: "/" },
+    { id: 4, text: "Hakkımızda", path: "/about-us" },
+    { id: 5, text: "Bize Ulaş", path: "/contact" },
+  ];
+
+  useEffect(() => {
+    setAllRoutes((prev) => [...publicRoutes, ...(token ? privateRoutes : [])]);
+  }, [token]);
+
+  useEffect(() => {
+    getCategories();
+  }, []);
 
   return (
     <div className="bg-gray-900 flex sticky z-50 top-0 justify-between items-center h-24 w-full mx-auto px-4 text-white">
@@ -31,21 +56,39 @@ const Navbar = () => {
 
       <div className="flex items-center gap-8">
         {/* Desktop Navigation */}
-        {token && (
-          <ul className="hidden md:flex gap-4">
-            {navItems.map((item) => (
-              <Link to={item.path} key={item.id}>
-                <li
-                  className={`px-3 py-2 m-2 text-lg font-semibold cursor-pointer duration-100 hover:text-primary ${
-                    location.pathname === item.path ? "text-primary" : ""
-                  }`}
+
+        <ul className="hidden md:flex gap-4">
+          {allRoutes.map((item) => (
+              item.path === "/" ? (
+                <NavbarDropdown
+                  key={item.id}
+                  isActive={isActive}
+                  setIsActive={setIsActive}
+                  data={categories}
                 >
-                  {item.text}
-                </li>
-              </Link>
-            ))}
-          </ul>
-        )}
+                  <Link to={item.path}>
+                    <li
+                      className={`px-3 py-2 m-2 text-lg font-semibold cursor-pointer duration-100 hover:text-primary ${
+                        location.pathname === item.path ? "text-primary" : ""
+                      }`}
+                    >
+                      {item.text}
+                    </li>
+                  </Link>
+                </NavbarDropdown>
+              ) : (
+                <Link to={item.path} key={item.id}>
+                  <li
+                    className={`px-3 py-2 m-2 text-lg font-semibold cursor-pointer duration-100 hover:text-primary ${
+                      location.pathname === item.path ? "text-primary" : ""
+                    }`}
+                  >
+                    {item.text}
+                  </li>
+                </Link>
+              )
+          ))}
+        </ul>
         <div className="hidden md:flex">
           {!token ? (
             <>
@@ -89,7 +132,7 @@ const Navbar = () => {
         <h1 className="w-full text-3xl font-bold text-primary m-4">REACT.</h1>
 
         {/* Mobile Navigation Items */}
-        {navItems.map((item) => (
+        {publicRoutes.map((item) => (
           <li
             key={item.id}
             className="p-4 border-b rounded-md hover:bg-primary duration-300 hover:text-black cursor-pointer border-gray-600"

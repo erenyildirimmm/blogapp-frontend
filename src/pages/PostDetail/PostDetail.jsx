@@ -12,11 +12,11 @@ const PostDetail = () => {
   const [post, setPost] = useState(null);
   const [relatedPosts, setRelatedPosts] = useState([]);
   const [loadingRelated, setLoadingRelated] = useState(false);
-  const { id } = useParams();
+  const { slug } = useParams();
 
   useEffect(() => {
     getBook();
-  }, [id]);
+  }, [slug]);
 
   useEffect(() => {
     if (post) {
@@ -25,9 +25,8 @@ const PostDetail = () => {
   }, [post]);
 
   const getBook = async () => {
-    console.log(id);
     try {
-      const data = await fetchData("GET", `/posts/detail/${id}`);
+      const data = await fetchData("GET", `/posts/detail/${slug}`);
       setPost(data);
     } catch (error) {
       enqueueSnackbar(error, { variant: "error" });
@@ -39,7 +38,7 @@ const PostDetail = () => {
     try {
       const response = await fetchData(
         "GET",
-        `/posts/related/${id}?category=${post.category._id}&limit=5`
+        `/posts/related/${post._id}?category=${post.category._id}&limit=5`
       );
       console.log(response.data);
       setRelatedPosts(response.data);

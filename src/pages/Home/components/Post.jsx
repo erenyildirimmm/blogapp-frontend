@@ -20,7 +20,7 @@ const Post = ({ postOrder = 1, data }) => {
       </div>
       <div className="p-6 relative">
         <div className="flex items-center justify-between mb-4">
-          <Link to={`/books/${data._id}`}>
+          <Link to={`/books/${data.slug}`}>
             <h2 className="font-bold text-2xl hover:text-primary">
               {data.title}
             </h2>
@@ -59,7 +59,7 @@ const Post = ({ postOrder = 1, data }) => {
     <CardBox className="relative after:absolute after:bg-black/40 after:left-0 after:top-0 after:content-[''] after:w-full after:h-full after:rounded-lg  h-72">
       <div className="absolute top-0 left-0 p-6 z-10 w-full h-full">
         <div className="flex items-center justify-between mb-4">
-          <Link to={`/books/${data._id}`}>
+          <Link to={`/books/${data.slug}`}>
             <h2 className="font-bold text-2xl text-white hover:text-primary">
               {data.title}
             </h2>
@@ -99,7 +99,7 @@ const Post = ({ postOrder = 1, data }) => {
     <CardBox className="relative h-72">
       <div className="p-6">
         <div className="flex items-center justify-between mb-4">
-          <Link to={`/books/${data._id}`}>
+          <Link to={`/books/${data.slug}`}>
             <h2 className="font-bold text-2xl hover:text-primary mb-4">
               {data.title}
             </h2>
@@ -142,7 +142,7 @@ const Post = ({ postOrder = 1, data }) => {
         alt=""
       />
       <div className="p-6">
-        <Link to={`/books/${data._id}`}>
+        <Link to={`/books/${data.slug}`}>
           <h2 className="font-bold text-2xl hover:text-primary mb-4">
             {data.title}
           </h2>
@@ -172,7 +172,7 @@ const Post = ({ postOrder = 1, data }) => {
   ) : (
     <CardBox className="relative h-72">
       <div className="p-6">
-        <Link to={`/books/${data._id}`}>
+        <Link to={`/books/${data.slug}`}>
           <h2 className="font-bold text-2xl hover:text-primary mb-4">
             {data.title}
           </h2>

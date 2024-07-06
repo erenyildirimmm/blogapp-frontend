@@ -36,13 +36,9 @@ const Home = () => {
     setPage((prevPage) => prevPage + 1);
   };
 
-  const handleSearchChange = (e) => {
-    setSearch(e.target.value);
-  };
-
   return (
     <Container>
-      <PostFilters search={search} onSearchChange={handleSearchChange} />
+      <PostFilters/>
       {loading ? (
         <Spinner />
       ) : (

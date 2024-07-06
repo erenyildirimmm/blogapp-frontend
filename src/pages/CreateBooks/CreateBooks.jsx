@@ -102,7 +102,8 @@ const CreateBooks = ({ isEdit }) => {
   const getBook = async () => {
     setLoading(true);
     try {
-      const postData = await fetchData("GET", `/posts/${id}`);
+      const postData = await fetchData("GET", `/posts/detail/${id}`);
+      console.log(postData);
       setForm({
         title: postData.title,
         entryHeadline: postData.entryHeadline,

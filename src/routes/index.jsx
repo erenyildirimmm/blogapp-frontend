@@ -28,7 +28,7 @@ const Routes = () => {
       ),
     },
     {
-      path: "/books/:id",
+      path: "/books/:slug",
       element: (
         <>
           <Navbar />
