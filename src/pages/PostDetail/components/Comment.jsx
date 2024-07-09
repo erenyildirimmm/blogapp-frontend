@@ -129,7 +129,7 @@ const Comment = ({ post, getBook }) => {
                 >
                   <div className="flex justify-between">
                     <div key={index} className="flex items-center gap-2">
-                      <Link to={`/profile`} className="flex items-center gap-2">
+                      <Link to={`/profile/${comment.userId.username}`} className="flex items-center gap-2">
                         <img
                           src={profilePic}
                           className="w-6 h-6 rounded-full"
@@ -138,7 +138,7 @@ const Comment = ({ post, getBook }) => {
                       </Link>
                       <div className="block gap-2">
                         <span className="text-sm block">
-                          {comment.userId.name}
+                          {comment.userId.fullName}
                         </span>
                         <span className="text-xs block text-gray-500">
                           {formatDistanceToNow(comment.createdAt, {

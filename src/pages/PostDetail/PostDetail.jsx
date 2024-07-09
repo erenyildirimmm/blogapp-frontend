@@ -7,11 +7,13 @@ import PostText from "./components/PostText";
 import Comment from "./components/Comment";
 import DefaultBlogCard from "../../components/DefaultBlogCard";
 import { enqueueSnackbar } from "notistack";
+import NotFoundComponent from "../../components/NotFoundComponent";
 
 const PostDetail = () => {
   const [post, setPost] = useState(null);
   const [relatedPosts, setRelatedPosts] = useState([]);
   const [loadingRelated, setLoadingRelated] = useState(false);
+  const [error, setError] = useState(false);
   const { slug } = useParams();
 
   useEffect(() => {
@@ -29,7 +31,8 @@ const PostDetail = () => {
       const data = await fetchData("GET", `/posts/detail/${slug}`);
       setPost(data);
     } catch (error) {
-      enqueueSnackbar(error, { variant: "error" });
+      setError(true);
+      enqueueSnackbar("Post Bulunamadı", { variant: "error" });
     }
   };
 
@@ -50,7 +53,7 @@ const PostDetail = () => {
     }
   };
 
-  return !post ? (
+  return error ? <NotFoundComponent title="Gönderi" /> : !post ? (
     <Spinner />
   ) : (
     <div className="container py-10 m-auto">

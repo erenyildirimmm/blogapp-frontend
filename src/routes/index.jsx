@@ -1,7 +1,4 @@
-import {
-  RouterProvider,
-  createBrowserRouter,
-} from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { useAuth } from "../provider/authProvider";
 import { ProtectedRoute } from "./ProtectedRoute";
 import Login from "../pages/Login";
@@ -12,9 +9,10 @@ import Profile from "../pages/Profile/Profile";
 import PostDetail from "../pages/PostDetail/PostDetail";
 import CreateBooks from "../pages/CreateBooks/CreateBooks";
 import NotFound from "../pages/NotFound";
+import AdminHome from "../Admin/pages/Home/AdminHome";
 
 const Routes = () => {
-  const { token, setToken } = useAuth();
+  const { token, setToken, role } = useAuth();
 
   // Define public routes accessible to all users
   const routesForPublic = [
@@ -47,7 +45,21 @@ const Routes = () => {
     },
     {
       path: "/about-us",
-      element: <div>About Us</div>,
+      element: (
+        <>
+          <Navbar />
+          <div>About Us</div>
+        </>
+      ),
+    },
+    {
+      path: "/contact",
+      element: (
+        <>
+          <Navbar />
+          <div>Contact</div>
+        </>
+      ),
     },
   ];
 
@@ -71,14 +83,21 @@ const Routes = () => {
           element: <Home />,
         },
         {
-          path: "/books/edit/:id",
+          path: "/books/edit/:slug",
           element: <CreateBooks isEdit={true} />,
         },
         {
-          path: "/profile/:id",
+          path: "/profile/:username",
           element: <Profile />,
         },
       ],
+    },
+  ];
+
+  const routesForSuperadmin = [
+    {
+      path: "/admin",
+      element: <AdminHome />,
     },
   ];
 
@@ -98,10 +117,11 @@ const Routes = () => {
   const router = createBrowserRouter([
     ...routesForPublic,
     ...(!token ? routesForNotAuthenticatedOnly : []),
+    ...(role === "superadmin" ? routesForSuperadmin : []),
     ...routesForAuthenticatedOnly,
     {
       path: "*",
-      element: (<NotFound />),
+      element: <NotFound />,
     },
   ]);
 

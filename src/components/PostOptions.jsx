@@ -6,9 +6,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Modal from "../ui/Modal";
 import { usePost } from "../provider/postProvider";
 
-const PostOptions = ({ data, getUser }) => {
+const PostOptions = ({ data, getUser, className }) => {
   const { handleDelete } = usePost();
   const location = useLocation();
+  const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false);
   const [modalIsActive, setModalIsActive] = useState(false);
   const dropdownRef = useRef(null);
@@ -30,6 +31,8 @@ const PostOptions = ({ data, getUser }) => {
     await handleDelete(data._id);
     if (location.pathname.split("/")[1] === "profile") {
       getUser(data.creator._id);
+    } else {
+      navigate("/");
     }
   };
 
@@ -38,14 +41,14 @@ const PostOptions = ({ data, getUser }) => {
       <div className="relative" ref={dropdownRef}>
         <div
           onClick={() => setIsActive((prev) => !prev)}
-          className="w-7 h-7 rounded-full flex items-center justify-center bg-gray-900/60 cursor-pointer"
+          className={`${className} rounded-full flex items-center justify-center bg-gray-900/60 cursor-pointer`}
         >
           <FiMoreHorizontal className="text-white" />
         </div>
         {isActive && (
           <div
             onBlur={() => setIsActive(false)}
-            className="absolute top-9 text-sm left-0 bg-gray-900 rounded-md text-white z-10"
+            className="absolute top-9 text-sm sm:left-0 -left-12 bg-gray-900 rounded-md text-white z-30"
           >
             <ul className="p-3">
               <li
@@ -59,7 +62,7 @@ const PostOptions = ({ data, getUser }) => {
               <li className="cursor-pointer">
                 <Link
                   className="flex items-center gap-1 "
-                  to={`/books/edit/${data._id}`}
+                  to={`/books/edit/${data.slug}`}
                 >
                   <RiEditFill className="text-yellow-500" />
                   Düzenle

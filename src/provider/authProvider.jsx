@@ -5,13 +5,14 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [token, setToken_] = useState(localStorage.getItem("token"));
+  const [username, setUsername] = useState(localStorage.getItem("username"));
   const [userId, setUserId] = useState(localStorage.getItem("userId"));
+  const [role, setRole] = useState(localStorage.getItem("role"));
   const [user, setUser] = useState(null);
   const [auth, setAuth] = useState(false);
   const [expiryDate, setExpiryDate] = useState(
     localStorage.getItem("expiryDate")
   );
-
 
   const setToken = (newToken) => {
     setToken_(newToken);
@@ -19,6 +20,9 @@ const AuthProvider = ({ children }) => {
 
   const handleLogout = () => {
     setToken();
+    setUserId("");
+    setUsername("");
+    setRole("");
     setExpiryDate();
   };
 
@@ -33,10 +37,12 @@ const AuthProvider = ({ children }) => {
       // axios.defaults.headers.common["Authorization"] = "Bearer " + token;
       setAuth(true);
       localStorage.setItem("token", token);
+      localStorage.setItem("username", username);
       localStorage.setItem("userId", userId);
+      localStorage.setItem("role", role);
       localStorage.setItem("expiryDate", expiryDate);
       axios
-        .get(`http://localhost:3001/users/${userId}`)
+        .get(`http://localhost:3001/users/${username}`)
         .then((response) => {
           setUser(response.data);
         })
@@ -55,6 +61,8 @@ const AuthProvider = ({ children }) => {
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
       localStorage.removeItem("expiryDate");
+      localStorage.removeItem("role");
+      localStorage.removeItem("username");
     }
   }, [token]);
 
@@ -64,10 +72,14 @@ const AuthProvider = ({ children }) => {
     expiryDate,
     setExpiryDate,
     handleLogout,
-    setUserId,
+    setUsername,
+    username,
     userId,
+    setUserId,
     user,
     auth,
+    role,
+    setRole,
   }));
 
   // Provide the authentication context to the children components

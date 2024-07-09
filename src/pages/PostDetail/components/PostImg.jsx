@@ -7,10 +7,11 @@ import { Link } from "react-router-dom";
 import Like from "./Like";
 import { useAuth } from "../../../provider/authProvider";
 import Options from "./options";
+import PostOptions from "../../../components/PostOptions";
 const PostImg = ({ data }) => {
   const { token, userId } = useAuth();
   return (
-    <div className="wrapper relative overflow-hidden">
+    <div className="wrapper relative">
       <div className="relative after:absolute after:w-full after:h-full after:content-[''] after:top-0 after:left-0 after:bg-black/40 after:rounded-lg">
         <div className="absolute top-0 left-0 md:p-12 p-4 z-10 w-full">
           <h1 className="md:text-4xl text-2xl text-white font-bold md:mb-4 mb-2 text-left">
@@ -39,7 +40,9 @@ const PostImg = ({ data }) => {
           </div>
           <div className="absolute top-4 right-4 z-10 inline-flex gap-2">
             {token && <Like postId={data._id} />}
-            {data.creator._id === userId && <Options />}
+            {data.creator._id === userId && (
+              <PostOptions className="sm:w-12 sm:h-12 h-8 w-8" data={data} />
+            )}
           </div>
         </div>
         <img

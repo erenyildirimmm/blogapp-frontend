@@ -10,14 +10,14 @@ import { useAuth } from "../../provider/authProvider";
 import Options from "./components/Options";
 
 const Profile = () => {
-  const { userId } = useAuth();
+  const { username } = useAuth();
   const { id } = useParams();
   const [userData, setUserData] = useState(null);
   const [error, setError] = useState(false);
 
   const getUser = async (id) => {
     try {
-    const result = await fetchData("GET", `/users/${id}`);
+    const result = await fetchData("GET", `/users/${username}`);
     setUserData(result);
     } catch(error) {
       if (error.response && error.response.status === 404) {
@@ -42,13 +42,13 @@ const Profile = () => {
       <div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-16">
         <div className="lg:col-span-3 text-dark-900 rounded-md py-6 w-full px-4 text-center">
           <img src={userImg} className="w-44 mx-auto mb-4" alt="" />
-          <h2 className="text-2xl mb-3">{userData.name}</h2>
+          <h2 className="text-2xl mb-3">{userData.username}</h2>
           {/* <div className="flex items-center mb-4 gap-2 justify-center">
             <MdMail />
             <span className="text-xs">{userData.email}</span>
           </div> */}
           <p className="text-sm mb-6">{userData.status}</p>
-          {userData.userId == userId && <Options userId={id} />}
+          {userData.username == username && <Options userId={userData.userId} />}
         </div>
         <div className="lg:col-span-9">
           <div className="flex items-center gap-4">

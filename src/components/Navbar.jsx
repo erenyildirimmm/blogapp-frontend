@@ -7,7 +7,7 @@ import { enqueueSnackbar } from "notistack";
 import NavbarDropdown from "./NavbarDropdown";
 
 const Navbar = () => {
-  const { token, handleLogout, userId } = useAuth();
+  const { token, handleLogout, username, role } = useAuth();
   const location = useLocation();
   const [nav, setNav] = useState(false);
   const [allRoutes, setAllRoutes] = useState([]);
@@ -27,9 +27,13 @@ const Navbar = () => {
     setNav((nax) => !nav);
   };
 
+  const superAdminRoutes = [
+    { id: 11, text: "Admin", path: "/admin" },
+  ];
+
   const privateRoutes = [
     { id: 1, text: "Blog Oluştur", path: "/books/create" },
-    { id: 2, text: "Profil", path: `/profile/${userId}` },
+    { id: 2, text: "Profil", path: `/profile/${username}` },
   ];
 
   // Array containing navigation items
@@ -40,7 +44,9 @@ const Navbar = () => {
   ];
 
   useEffect(() => {
-    setAllRoutes((prev) => [...publicRoutes, ...(token ? privateRoutes : [])]);
+    setAllRoutes((prev) => {
+      return [...(role === "superadmin" ? superAdminRoutes : []), ...publicRoutes, ...(token ? privateRoutes : [])];
+    });
   }, [token]);
 
   useEffect(() => {
@@ -58,26 +64,15 @@ const Navbar = () => {
         {/* Desktop Navigation */}
 
         <ul className="hidden md:flex gap-4">
-          {allRoutes.map((item) => (
-              item.path === "/" ? (
-                <NavbarDropdown
-                  key={item.id}
-                  isActive={isActive}
-                  setIsActive={setIsActive}
-                  data={categories}
-                >
-                  <Link to={item.path}>
-                    <li
-                      className={`px-3 py-2 m-2 text-lg font-semibold cursor-pointer duration-100 hover:text-primary ${
-                        location.pathname === item.path ? "text-primary" : ""
-                      }`}
-                    >
-                      {item.text}
-                    </li>
-                  </Link>
-                </NavbarDropdown>
-              ) : (
-                <Link to={item.path} key={item.id}>
+          {allRoutes.map((item) =>
+            item.path === "/" ? (
+              <NavbarDropdown
+                key={item.id}
+                isActive={isActive}
+                setIsActive={setIsActive}
+                data={categories}
+              >
+                <Link to={item.path}>
                   <li
                     className={`px-3 py-2 m-2 text-lg font-semibold cursor-pointer duration-100 hover:text-primary ${
                       location.pathname === item.path ? "text-primary" : ""
@@ -86,8 +81,19 @@ const Navbar = () => {
                     {item.text}
                   </li>
                 </Link>
-              )
-          ))}
+              </NavbarDropdown>
+            ) : (
+              <Link to={item.path} key={item.id}>
+                <li
+                  className={`px-3 py-2 m-2 text-lg font-semibold cursor-pointer duration-100 hover:text-primary ${
+                    location.pathname === item.path ? "text-primary" : ""
+                  }`}
+                >
+                  {item.text}
+                </li>
+              </Link>
+            )
+          )}
         </ul>
         <div className="hidden md:flex">
           {!token ? (

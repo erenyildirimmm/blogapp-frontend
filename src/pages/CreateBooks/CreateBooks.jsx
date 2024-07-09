@@ -8,7 +8,7 @@ import fetchData from "../../api";
 import Container from "../../ui/Container";
 
 const CreateBooks = ({ isEdit }) => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const [form, setForm] = useState({
@@ -73,7 +73,7 @@ const CreateBooks = ({ isEdit }) => {
     try {
       const response = await fetchData(
         `${isEdit ? "PUT" : "POST"}`,
-        `${isEdit ? `/posts/${id}` : "/posts"}`,
+        `${isEdit ? `/posts/${slug}` : "/posts"}`,
         formData
       );
       if (isEdit) {
@@ -102,7 +102,7 @@ const CreateBooks = ({ isEdit }) => {
   const getBook = async () => {
     setLoading(true);
     try {
-      const postData = await fetchData("GET", `/posts/detail/${id}`);
+      const postData = await fetchData("GET", `/posts/detail/${slug}`);
       console.log(postData);
       setForm({
         title: postData.title,

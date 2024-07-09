@@ -9,6 +9,7 @@ const Options = ({ userId }) => {
   const [modalIsActive, setModalIsActive] = useState(false);
   const { handleLogout } = useAuth();
   const navigate = useNavigate();
+  console.log(userId);
   const handleDelete = async () => {
     try {
       await fetchData("DELETE", `/users/delete/${userId}`);

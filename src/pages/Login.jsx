@@ -8,15 +8,15 @@ import { enqueueSnackbar } from "notistack";
 import loginImage from "./../assets/login.jpg";
 
 const Login = () => {
-  const { setToken, setExpiryDate, setUserId } = useAuth();
+  const { setToken, setExpiryDate, setUsername, setUserId, setRole } = useAuth();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
     const data = {
-      email,
+      emailOrUsername,
       password,
     };
     try {
@@ -26,7 +26,9 @@ const Login = () => {
       );
       const remainingMilliseconds = 60 * 60 * 1000;
       setToken(result.data.token);
+      setUsername(result.data.username);
       setUserId(result.data.userId);
+      setRole(result.data.role)
       setExpiryDate(
         new Date(new Date().getTime() + remainingMilliseconds).toISOString()
       );
@@ -54,12 +56,12 @@ const Login = () => {
         <h2 className="text-white text-5xl mb-10">Giriş Yap</h2>
         <form onSubmit={handleLogin} className="flex flex-col w-80">
           <input
-            onChange={(e) => setEmail(e.target.value)}
-            autoComplete="new-mail"
-            value={email ? email : ""}
+            onChange={(e) => setEmailOrUsername(e.target.value)}
+            autoComplete="emailOrUsername"
+            value={emailOrUsername ? emailOrUsername : ""}
             type="text"
             className="mb-3 p-3 border outline-none rounded-md"
-            placeholder="Email"
+            placeholder="Email or Username"
           />
           <input
             onChange={(e) => setPassword(e.target.value)}

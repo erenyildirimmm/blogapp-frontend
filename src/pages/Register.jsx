@@ -16,8 +16,10 @@ import registerImage from "./../assets/register.jpg";
 
 const Register = () => {
   const navigate = useNavigate();
+  const [isUnique, setIsUnique] = useState(true);
   const [userData, setUserData] = useState({
-    name: "",
+    fullName: "",
+    username: "",
     email: "",
     password: "",
     socialMedia: {
@@ -28,9 +30,20 @@ const Register = () => {
     },
   });
 
-  const handleChange = (e) => {
+  const checkUsername = async (username) => {
+    try {
+      const isUnique = await fetchData("POST", "/auth/check-username", {
+        username: username,
+      });
+      return isUnique;
+    } catch (error) {
+      console.error(err);
+      return false;
+    }
+  };
+
+  const handleChange = async (e) => {
     const { name, value } = e.target;
-    console.log(value);
     if (
       name === "x" ||
       name === "instagram" ||
@@ -54,7 +67,12 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    if (!userData.name || !userData.email || !userData.password) {
+    if (
+      !userData.fullName ||
+      !userData.email ||
+      !userData.password ||
+      !userData.username
+    ) {
       enqueueSnackbar("Lütfen tüm alanları doldur.", {
         variant: "error",
         autoHideDuration: 1500,
@@ -62,6 +80,14 @@ const Register = () => {
       return;
     }
     try {
+      const isUnique = await checkUsername(userData.username);
+      if(!isUnique) {
+        enqueueSnackbar("Kullanıcı Adı zaten kullanılıyor. Lütfen farklı bir kullanıcı adı seç.", {
+          variant: "error",
+          autoHideDuration: 1500,
+        });
+        return;
+      }
       const result = await fetchData("POST", "/auth/signup", userData);
       navigate("/login");
       enqueueSnackbar("Kayıt Başarılı", { variant: "success" });
@@ -86,32 +112,45 @@ const Register = () => {
       <div className="w-full h-screen flex flex-col items-center justify-center bg-gray-900">
         <h2 className="text-white text-5xl mb-10">Kayıt Ol</h2>
         <form onSubmit={handleRegister} className="flex flex-col">
-          <input
-            onChange={handleChange}
-            name="name"
-            value={userData.name}
-            type="text"
-            className="mb-3 p-3 border outline-none rounded-md"
-            placeholder="İsim Soyisim"
-          />
-          <input
-            onChange={handleChange}
-            name="email"
-            autoComplete="new-mail"
-            value={userData.email}
-            type="text"
-            className="mb-3 p-3 border outline-none rounded-md"
-            placeholder="Email"
-          />
-          <input
-            onChange={handleChange}
-            name="password"
-            autoComplete="new-password"
-            value={userData.password}
-            type="password"
-            className="mb-3 p-3 border outline-none rounded-md "
-            placeholder="Password"
-          />
+          <div className="grid lg:grid-cols-2 lg:gap-x-2">
+            <input
+              onChange={handleChange}
+              name="fullName"
+              value={userData.fullName}
+              type="text"
+              className="mb-3 p-3 border outline-none rounded-md"
+              placeholder="İsim Soyisim"
+            />
+            <div>
+              <input
+                onChange={handleChange}
+                name="username"
+                value={userData.username}
+                type="text"
+                className="mb-3 p-3 border outline-none rounded-md w-full"
+                placeholder="Kullanıcı Adı"
+              />
+              {!isUnique && <small>Bu kullanıcı adı zaten kullanılıyor</small>}
+            </div>
+            <input
+              onChange={handleChange}
+              name="email"
+              autoComplete="new-mail"
+              value={userData.email}
+              type="text"
+              className="mb-3 p-3 border outline-none rounded-md"
+              placeholder="Email"
+            />
+            <input
+              onChange={handleChange}
+              name="password"
+              autoComplete="new-password"
+              value={userData.password}
+              type="password"
+              className="mb-3 p-3 border outline-none rounded-md "
+              placeholder="Password"
+            />
+          </div>
           <div className="grid lg:grid-cols-2 lg:gap-x-2">
             <div className="flex items-center w-full mb-3 ">
               <span className="p-2 bg-primary h-full flex items-center justify-center rounded-tl-md rounded-bl-md">

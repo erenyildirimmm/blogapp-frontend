@@ -26,7 +26,7 @@ const Post = ({ postOrder = 1, data }) => {
             </h2>
           </Link>
           {data.creator._id == userId && (
-            <PostOptions data={data}  />
+            <PostOptions data={data} className="w-7 h-7"  />
           )}
         </div>
         <p
@@ -40,7 +40,7 @@ const Post = ({ postOrder = 1, data }) => {
               className="w-5 h-5 rounded-full"
               alt="profile"
             />
-            <span className="text-xs text-black/70">{data.creator.name}</span>
+            <span className="text-xs text-black/70">{data.creator.fullName}</span>
           </div>
         </Link>
         <div className="absolute bottom-3 right-3 flex items-center gap-3">
@@ -65,7 +65,7 @@ const Post = ({ postOrder = 1, data }) => {
             </h2>
           </Link>
           {data.creator._id == userId && (
-            <PostOptions data={data}  />
+            <PostOptions data={data} className="w-7 h-7"  />
           )}
         </div>
         <Link to={`/profile/${data.creator._id}`}>
@@ -75,7 +75,7 @@ const Post = ({ postOrder = 1, data }) => {
               className="w-5 h-5 rounded-full"
               alt="profile"
             />
-            <span className="text-xs text-white">{data.creator.name}</span>
+            <span className="text-xs text-white">{data.creator.fullName}</span>
           </div>
         </Link>
         <div className="absolute bottom-3 right-3 flex items-center gap-3 z-10 text-white">
@@ -105,7 +105,7 @@ const Post = ({ postOrder = 1, data }) => {
             </h2>
           </Link>
           {data.creator._id == userId && (
-            <PostOptions data={data}  />
+            <PostOptions data={data} className="w-7 h-7"  />
           )}
         </div>
         <p
@@ -119,7 +119,7 @@ const Post = ({ postOrder = 1, data }) => {
               className="w-5 h-5 rounded-full"
               alt="profile"
             />
-            <span className="text-xs text-black/70">{data.creator.name}</span>
+            <span className="text-xs text-black/70">{data.creator.fullName}</span>
           </div>
         </Link>
         <div className="absolute bottom-3 right-3 flex items-center gap-3">
@@ -154,7 +154,7 @@ const Post = ({ postOrder = 1, data }) => {
               className="w-5 h-5 rounded-full"
               alt="profile"
             />
-            <span className="text-xs text-black/70">{data.creator.name}</span>
+            <span className="text-xs text-black/70">{data.creator.fullName}</span>
           </div>
         </Link>
         <div className="absolute bottom-3 right-3 flex items-center gap-3">
@@ -188,7 +188,7 @@ const Post = ({ postOrder = 1, data }) => {
               className="w-5 h-5 rounded-full"
               alt="profile"
             />
-            <span className="text-xs text-black/70">{data.creator.name}</span>
+            <span className="text-xs text-black/70">{data.creator.fullName}</span>
           </div>
         </Link>
         <div className="absolute bottom-3 right-3 flex items-center gap-3">

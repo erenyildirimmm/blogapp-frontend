@@ -2,27 +2,19 @@ import React, { useEffect, useState } from "react";
 import Container from "../../ui/Container";
 import Spinner from "../../components/Spinner";
 import Section from "../../ui/Section";
-import fetchData from "../../api";
 import Post from "./components/Post";
-import CardBox from "../../components/CardBox";
-import profilePic from "../../assets/user.png";
-import { enqueueSnackbar } from "notistack";
 import { usePost } from "../../provider/postProvider";
 import { useLocation } from "react-router-dom";
-import Input from "../../ui/Input";
 import PostFilters from "../../components/PostFilters";
 
 const Home = () => {
   const {
     posts,
     hasMore,
-    page,
     setLoading,
     setPage,
-    setPosts,
     loading,
     resetPosts,
-    setSearch,
     search
   } = usePost();
   const location = useLocation();
