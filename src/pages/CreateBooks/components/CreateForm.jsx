@@ -17,7 +17,12 @@ const CreateForm = ({
   return (
     <>
       <div className="max-w-4xl mx-auto">
-        <ImageUpload handleFileChange={onInputChange} setForm={setForm} image={form.image} isEdit={isEdit} />
+        <ImageUpload
+          handleFileChange={onInputChange}
+          setForm={setForm}
+          image={form.blogImage}
+          isEdit={isEdit}
+        />
         <div className="grid grid-cols-2 gap-4">
           <Input
             label="Title"

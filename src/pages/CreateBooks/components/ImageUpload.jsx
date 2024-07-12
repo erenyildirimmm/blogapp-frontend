@@ -6,7 +6,7 @@ const ImageUpload = ({ handleFileChange, image, isEdit, setForm }) => {
     setForm({
       title: "",
       entryHeadline: "",
-      image: null,
+      blogImg: null,
       category: null,
     });
   }, [isEdit])
@@ -15,7 +15,7 @@ const ImageUpload = ({ handleFileChange, image, isEdit, setForm }) => {
       <label htmlFor="file-upload" className="cursor-pointer w-full">
         <div className="bg-gray-200 w-full h-full flex justify-center items-center rounded-lg">
           {image ? (
-            typeof image === 'string' ? (
+            typeof image === "string" ? (
               <img
                 src={`http://localhost:3001/${image}`}
                 alt="Selected file"
@@ -39,7 +39,7 @@ const ImageUpload = ({ handleFileChange, image, isEdit, setForm }) => {
       <input
         id="file-upload"
         type="file"
-        name="image"
+        name="blogImage"
         className="hidden"
         onChange={handleFileChange}
       />

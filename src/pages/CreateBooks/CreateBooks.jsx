@@ -14,7 +14,7 @@ const CreateBooks = ({ isEdit }) => {
   const [form, setForm] = useState({
     title: "",
     entryHeadline: "",
-    image: null,
+    blogImage: null,
     category: null,
   });
   const [editorContent, setEditorContent] = useState("");
@@ -30,12 +30,12 @@ const CreateBooks = ({ isEdit }) => {
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
     setForm((prevData) => {
-      if (name === "image") {
+      if (name === "blogImage") {
         return { ...prevData, [name]: files[0] };
       }
       return { ...prevData, [name]: value };
     });
-    if (name === "image") {
+    if (name === "blogImage") {
       handlePreviewImageChange(e);
     }
   };
@@ -55,7 +55,7 @@ const CreateBooks = ({ isEdit }) => {
       !form.entryHeadline ||
       !form.category ||
       !editorContent ||
-      !form.image
+      !form.blogImage
     ) {
       enqueueSnackbar("Tüm alanları doldurmalısın", {
         variant: "warning",
@@ -68,7 +68,8 @@ const CreateBooks = ({ isEdit }) => {
     formData.append("entryHeadline", form.entryHeadline);
     formData.append("category", form.category.id);
     formData.append("content", editorContent);
-    formData.append("image", form.image);
+    formData.append("image", form.blogImage);
+    console.log(formData);
     setLoading(true);
     try {
       const response = await fetchData(
@@ -107,7 +108,7 @@ const CreateBooks = ({ isEdit }) => {
       setForm({
         title: postData.title,
         entryHeadline: postData.entryHeadline,
-        image: postData.imageUrl,
+        blogImage: postData.imageUrl,
         category: {
           name: postData.category.name,
           id: postData.category._id,

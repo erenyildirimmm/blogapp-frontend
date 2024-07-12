@@ -9,6 +9,7 @@ import PostOptions from "../../../components/PostOptions";
 
 const Post = ({ postOrder = 1, data }) => {
   const { userId } = useAuth();
+  console.log(data);
   return postOrder === 1 ? (
     <CardBox className="grid md:grid-cols-2 h-72 relative">
       <div className="md:block hidden">
@@ -33,7 +34,7 @@ const Post = ({ postOrder = 1, data }) => {
           className="max-w-400px overflow-hidden line-clamp-5 mb-16"
           dangerouslySetInnerHTML={{ __html: data.content }}
         ></p>
-        <Link to={`/profile/${data.creator._id}`}>
+        <Link to={`/users/${data.creator.username}`}>
           <div className="absolute bottom-9 flex items-center gap-2">
             <img
               src={profilePic}
@@ -68,7 +69,7 @@ const Post = ({ postOrder = 1, data }) => {
             <PostOptions data={data} className="w-7 h-7"  />
           )}
         </div>
-        <Link to={`/profile/${data.creator._id}`}>
+        <Link to={`/users/${data.creator.username}`}>
           <div className="absolute bottom-9 flex items-center gap-2">
             <img
               src={profilePic}
@@ -112,7 +113,7 @@ const Post = ({ postOrder = 1, data }) => {
           className="max-w-400px overflow-hidden line-clamp-5 mb-16"
           dangerouslySetInnerHTML={{ __html: data.content }}
         ></p>
-        <Link to={`/profile/${data.creator._id}`}>
+        <Link to={`/users/${data.creator.username}`}>
           <div className="absolute bottom-9 flex items-center gap-2">
             <img
               src={profilePic}
@@ -147,7 +148,7 @@ const Post = ({ postOrder = 1, data }) => {
             {data.title}
           </h2>
         </Link>
-        <Link to={`/profile/${data.creator._id}`}>
+        <Link to={`/users/${data.creator.username}`}>
           <div className="absolute bottom-9 flex items-center gap-2">
             <img
               src={profilePic}
@@ -181,7 +182,7 @@ const Post = ({ postOrder = 1, data }) => {
           className="max-w-400px overflow-hidden line-clamp-5 mb-16"
           dangerouslySetInnerHTML={{ __html: data.content }}
         ></p>
-        <Link to={`/profile/${data.creator._id}`}>
+        <Link to={`/users/${data.creator.username}`}>
           <div className="absolute bottom-9 flex items-center gap-2">
             <img
               src={profilePic}

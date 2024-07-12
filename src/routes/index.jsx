@@ -9,7 +9,15 @@ import Profile from "../pages/Profile/Profile";
 import PostDetail from "../pages/PostDetail/PostDetail";
 import CreateBooks from "../pages/CreateBooks/CreateBooks";
 import NotFound from "../pages/NotFound";
+import AdminLayout from "../Admin/components/AdminLayout";
+
+// Admin Route Paths
 import AdminHome from "../Admin/pages/Home/AdminHome";
+import Users from "../Admin/pages/Users/Users";
+import Admins from "../Admin/pages/Admins/Admins";
+import Posts from "../Admin/pages/Posts/Posts";
+import Categories from "../Admin/pages/Categories/Categories";
+
 
 const Routes = () => {
   const { token, setToken, role } = useAuth();
@@ -35,7 +43,7 @@ const Routes = () => {
       ),
     },
     {
-      path: "/profile/:id",
+      path: "/users/:username",
       element: (
         <>
           <Navbar />
@@ -94,12 +102,35 @@ const Routes = () => {
     },
   ];
 
-  const routesForSuperadmin = [
-    {
-      path: "/admin",
-      element: <AdminHome />,
-    },
-  ];
+const routesForSuperadmin = [
+  {
+    path: "/admin",
+    element: <AdminLayout />,
+    children: [
+      {
+        index: true,
+        element: <AdminHome />,
+      },
+      {
+        path: "users",
+        element: <Users />,
+      },
+      {
+        path: "admins",
+        element: <Admins />,
+      },
+      {
+        path: "posts",
+        element: <Posts />,
+      },
+      {
+        path: "categories",
+        element: <Categories />,
+      },
+    ],
+  },
+];
+
 
   // Define routes accessible only to non-authenticated users
   const routesForNotAuthenticatedOnly = [
